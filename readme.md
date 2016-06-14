@@ -1,5 +1,5 @@
 # Reactivate v1.0.0
--
+
 ### A quick way to get up and running with [React](https://facebook.github.io/react/docs/getting-started.html)/[Redux](http://redux.js.org/docs/basics/UsageWithReact.html) (leveraging [ES2015](https://babeljs.io/docs/learn-es2015/)) and [SASS](http://sass-lang.com/documentation/file.SASS_REFERENCE.html)/[Compass](http://compass-style.org/help/)/[Breakpoint](http://breakpoint-sass.com/) using [Webpack](https://webpack.github.io/docs/) for rapid development. 
 -
 
