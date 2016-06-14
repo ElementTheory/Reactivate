@@ -1,0 +1,26 @@
+html {
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  color: #353942;
+  font-size: 62.5%;
+  line-height: 1.4;
+  @include clearfix();
+
+  h1 {
+    font-size: 30px;
+
+    @include breakpoint(max-width 1024px){
+      font-size: 60px;
+    }
+
+  }
+
+}
+
