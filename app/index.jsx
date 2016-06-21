@@ -13,21 +13,20 @@ import Styles from "./assets/scss/main";
 ******************************************/
 import Header from "./components/header.jsx";
 
+
 /*  Start Building!
 ******************************************/
 class Layout extends React.Component {
-  constructor(props){
-    super(props);
+  constructor(){
+    super();
     this.state = {
       companyName: "Hello World!"
-    }
+    };
   }
 
   render() {
     return (
-      <div>
-        <Header companyName={ this.state.companyName } />
-      </div>
+      <Header companyName={this.state.companyName} />
     );
   }
 }

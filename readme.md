@@ -70,8 +70,7 @@
 
 
 #### To Do
-* Verify HMR functionality
-* Image optimizations
+* Incorporate image optimizations for prod
 * Explanation of the folder structure & rationale
 * How each package play a role (helps with people who are just getting started, especially with webpacks)
 * Technologies used (also in package.json)
