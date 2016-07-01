@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 
-exports.devServer = function(options){
+exports.devServer = function(PATHS){
   return {
     // /********** HMR on Windows, Ubuntu, and Vagrant **********/
     // watchOptions: {
@@ -10,6 +10,7 @@ exports.devServer = function(options){
     //   poll: 1000
     // },
     devServer: {
+      contentBase: PATHS.app,
       // Enable history API fallback so HTML5 History API based
       // routing works. This is a good default that will come
       // in handy in more complicated setups.
@@ -30,8 +31,8 @@ exports.devServer = function(options){
       //
       // 0.0.0.0 is available to all network devices
       // unlike default `localhost`.
-      host: options.host, // Defaults to `localhost`
-      port: options.port // Defaults to 8080
+      host: PATHS.host, // Defaults to `localhost`
+      port: PATHS.port // Defaults to 8080 but can change
     },
     plugins: [
       // Enable multi-pass compilation for enhanced performance
@@ -43,19 +44,27 @@ exports.devServer = function(options){
   };
 }
 
-exports.setupSASS = function(PATHS){
+exports.runSASS = function(PATHS){
   return {
     module: {
       loaders: [
         {
           test: /\.scss$/,
-          loaders: ['style', 'css?sourceMap', 'sass?sourceMap'],
-          include: PATHS.scss
+          loaders: ['style', 'css?sourceMap', 'sass']
+        },
+        { 
+          test: /\.(jpe?g|png|gif|svg)$/, 
+          loader: "file?name=http://"+ PATHS.host +":"+ PATHS.port + PATHS.img +"/[name].[ext]"
+        },
+        { 
+          test: /\.(eot|woff2?|ttf)$/, 
+          loader: "file?name=http://"+ PATHS.host +":"+ PATHS.port + PATHS.font +"/[name].[ext]"
         }
       ]
     },
     sassLoader: {
       includePaths: [
+        PATHS.scss,
         PATHS.compass,
         PATHS.breakpoint
       ]
@@ -69,7 +78,15 @@ exports.extractCSS = function(PATHS, ExtractTextPlugin){
         loaders: [
             { 
               test: /\.scss$/, 
-              loader: ExtractTextPlugin.extract(['css?sourceMap', 'sass?sourceMap'])
+              loader: ExtractTextPlugin.extract(['css', 'sass'])
+            },
+            { 
+              test: /\.(jpe?g|png|gif|svg)$/, 
+              loader: "file?name="+ PATHS.img +"/[name]-[hash].[ext]"
+            },
+            { 
+              test: /\.(eot|woff2?|ttf)$/, 
+              loader: "file?name="+ PATHS.font +"/[name].[ext]"
             }
         ]
     },
@@ -80,7 +97,7 @@ exports.extractCSS = function(PATHS, ExtractTextPlugin){
       ]
     },
     plugins: [
-      new ExtractTextPlugin("[name]-[contenthash].css")
+      new ExtractTextPlugin(PATHS.css + "/[name]-[contenthash].css")
     ]
   };
 }
@@ -155,6 +172,24 @@ exports.clean = function(path, CleanWebpackPlugin) {
         // project and will fail to work.
         root: process.cwd()
       })
+    ]
+  };
+}
+
+exports.copyStaticAssets = function(PATHS, CopyWebpackPlugin){
+  return {
+    plugins: [
+      new CopyWebpackPlugin(
+        [
+          //{ from: PATHS.app + PATHS.font, to: PATHS.build + PATHS.font  },
+          // in theory we would not need this if all images in source code is imported correctly, but just in case...
+          { from: PATHS.app + PATHS.img, to: PATHS.build + PATHS.img  },
+          { from: PATHS.app + PATHS.json, to: PATHS.build + PATHS.json  }
+        ], 
+        {
+          ignore: ['.DS_Store']
+        }
+      )
     ]
   };
 }

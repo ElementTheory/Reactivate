@@ -11,7 +11,12 @@ import Styles from "./assets/scss/main";
 
 /*  Load Components
 ******************************************/
-import Header from "./components/header.jsx";
+import Footer from "./components/footer";
+
+
+/*  Load Assets
+******************************************/   
+import companyLogo from './assets/img/element-theory.svg';
 
 
 /*  Start Building!
@@ -20,13 +25,24 @@ class Layout extends React.Component {
   constructor(){
     super();
     this.state = {
-      companyName: "Hello World!"
+      companyName: "Element Theory"
     };
   }
 
   render() {
+
     return (
-      <Header companyName={this.state.companyName} />
+      <div>
+        <div className="container">
+          <div className="logo">
+            <div className="logo-image">
+              <img className="svg" src={ companyLogo } />
+            </div>
+            <h1><span>Reactivate</span> by { this.state.companyName }</h1>
+          </div>
+        </div>
+        <Footer />
+      </div>
     );
   }
 }

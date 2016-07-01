@@ -1,14 +1,27 @@
 /*  Get paths to asset directories
 ******************************************/
 const path = require('path');
-const PATHS = {
+var PATHS = {
+  // Input / Output Folders
   app: path.join(__dirname, 'app'),
   build: path.join(__dirname, 'build'),
-  html: path.join(__dirname, 'app/assets/html-template'),
-  css: path.join(__dirname, 'app/assets/css'),
-  scss: path.join(__dirname, 'app/assets/scss'),
-  compass: path.join(__dirname, 'node_modules/compass-mixins/lib'),
-  breakpoint: path.join(__dirname, 'node_modules/breakpoint-sass/stylesheets')
+
+  // Static Assets
+  assets: '/assets',
+  css: '/assets/css',
+  font: '/assets/font',
+  img: '/assets/img',
+  html: '/assets/html-template',
+  json: '/assets/json',
+  scss: '/assets/scss', // HTML Template Path
+
+  // Direct link to Compass and Breakpoint (workaround for sass-loader)
+  compass: path.join(__dirname, '/node_modules/compass-mixins/lib'),
+  breakpoint: path.join(__dirname, '/node_modules/breakpoint-sass/stylesheets'),
+
+  // Establish Host and Port if none exist
+  host: process.env.HOST === undefined ? 'localhost' : process.env.HOST,
+  port: process.env.PORT === undefined ? '8080' : process.env.PORT
 };
 
 /*  Plugins, see package.json
@@ -17,6 +30,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FaviconWebpackPlugin = require('favicons-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const ImageLoaderPlugin = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 /*  Tools/Helpers, see package.json
 ******************************************/
@@ -42,19 +57,16 @@ const common = function(status){
     },
     output: {
       path: PATHS.build,
-      filename: filenameStructure,
-      // This is used for require.ensure. The setup
-      // will work without but this is useful to set.
-      chunkFilename: '[name]-[chunkhash].js'
+      filename: filenameStructure
     },
     plugins: [
       new HtmlWebpackPlugin({ 
         title: 'Reactivate',
-        template: PATHS.html + '/index.ejs'
+        template: PATHS.app + PATHS.html + '/index.ejs'
       })
     ],
     resolve: {
-      extensions: ['', '.js', '.jsx', '.css', '.scss']
+      extensions: ['', '.js', '.jsx', '.scss']
     }
   };
 }
@@ -69,7 +81,7 @@ switch(process.env.npm_lifecycle_event){
   case 'build':
   case 'stats':
     config = merge(
-      common('prod'), { devtool: 'source-map' },
+      common('prod'), // { devtool: 'source-map' },
       parts.setFreeVariable('process.env.NODE_ENV', 'production'),
       parts.extractBundle({
         name: 'vendor',
@@ -78,19 +90,17 @@ switch(process.env.npm_lifecycle_event){
       parts.extractCSS(PATHS, ExtractTextPlugin),
       parts.babel(PATHS),
       parts.minify(),
-      parts.clean(PATHS.build, CleanWebpackPlugin)
+      parts.clean(PATHS.build, CleanWebpackPlugin),
+      parts.copyStaticAssets(PATHS, CopyWebpackPlugin)
     );
     break;
 
   default:
     config = merge(
       common(), { devtool: 'eval-source-map' },
+      parts.runSASS(PATHS),
       parts.babel(PATHS),
-      parts.setupSASS(PATHS),
-      parts.devServer({
-        host: process.env.HOST,
-        port: process.env.PORT
-      })
+      parts.devServer(PATHS)
     );
 }
 

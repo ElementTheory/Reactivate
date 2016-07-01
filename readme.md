@@ -1,4 +1,4 @@
-# Reactivate v1.0.0
+# Reactivate v0.9.0
 
 ### A quick way to get up and running with [React](https://facebook.github.io/react/docs/getting-started.html)/[Redux](http://redux.js.org/docs/basics/UsageWithReact.html) (leveraging [ES2015](https://babeljs.io/docs/learn-es2015/)) and [SASS](http://sass-lang.com/documentation/file.SASS_REFERENCE.html)/[Compass](http://compass-style.org/help/)/[Breakpoint](http://breakpoint-sass.com/) using [Webpack](https://webpack.github.io/docs/) for rapid development. 
 -
@@ -51,7 +51,7 @@
 
 3. Run ```npm run start```.
 
-4. The terminal should log out the URL for the development page (e.g. [http://localhost:8080/](http://localhost:8080/)) and a message stating:
+4. The terminal should log out the URL for the development page (by default it's [http://localhost:8080/](http://localhost:8080/) (see webpack.config.js) unless you change the process.env.HOST and process.env.PORT values) and a message stating:
 	* webpack: bundle is now VALID.
 
 
@@ -65,12 +65,12 @@
 
 4. This will perform the following actions:
 	* Delete the build folder if on already exists and all its content
-	* Create a new build folder with an index.html and a hash-appended static css and js assets along with their respective map files and a manifest.
+	* Create a new build folder with an index.html and a hash-appended static css and js assets along with their respective manifests.  Also copies over images, fonts, and JSON files.
 
 
 
 #### To Do
-* Incorporate image optimizations for prod
+* Incorporate image optimizations for production
 * Explanation of the folder structure & rationale
 * How each package play a role (helps with people who are just getting started, especially with webpacks)
 * Technologies used (also in package.json)

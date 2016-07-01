@@ -1,0 +1,17 @@
+@font-face {
+  font-family: Oswald;
+  src: url('../font/Oswald-Regular-webfont.eot'); /* IE9 Compat Modes */
+  src: url('../font/Oswald-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+       // url('../font/Oswald-Regular-webfont.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../font/Oswald-Regular-webfont.woff') format('woff'), /* Pretty Modern Browsers */
+       url('../font/Oswald-Regular-webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
+}
+
+@font-face {
+  font-family: 'Oswald Light';
+  src: url('../font/Oswald-Light-webfont.eot'); /* IE9 Compat Modes */
+  src: url('../font/Oswald-Light-webfont.eot?#iefix') format('embedded-opentype'),
+       // url('../font/Oswald-Regular-webfont.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../font/Oswald-Light-webfont.woff') format('woff'), /* Pretty Modern Browsers */
+       url('../font/Oswald-Light-webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
+}

@@ -13,14 +13,5 @@ body {
   line-height: 1.4;
   @include clearfix();
 
-  h1 {
-    font-size: 30px;
-
-    @include breakpoint(max-width 1024px){
-      font-size: 60px;
-    }
-
-  }
-
 }
 
