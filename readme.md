@@ -26,7 +26,7 @@
   * [Node.js & NPM](https://nodejs.org/en/download/)
   * [SASS](http://sass-lang.com/install)
   * [Compass](http://compass-style.org/install/)
-  * **TIP:** As a Mac user, you can use Homebrew to upgrade your factory-installed instance of Ruby and Gems and freshly install Node. Use Gems to install 
+  * **TIP:** As a Mac user, you can use Homebrew to upgrade your factory-installed instance of Ruby and Gems and freshly install Node.
 
 3. You have some experience with Bash and a Terminal app.
 
